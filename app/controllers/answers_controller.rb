@@ -9,7 +9,6 @@ class AnswersController < ApplicationController
   def show
     @answer = Answer.find(params[:id])
     @question = Question.find(params[:question_id])
-    binding.pry
   end
 
   # GET /answers/new

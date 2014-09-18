@@ -9,6 +9,11 @@
 <% @answers.each do |answer| %>
   <a href="<%= answer.user.url %>">@<%= answer.user.username %></a> at <%= answer.created_at %> said: <br />
   <%= answer.description %><br />
+  <% if user_signed_in? && same_user?(@question) %>
+
+
+    <%= button_to "Mark Best Answer", question_best_answer_path(@question, answer), method: :patch %>
+  <% end %>
   <br>
 <% end %>
 

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "sessions#create"
   get "/auth/failure", to: "sessions#failure"
   get "/sign_out", to: "sessions#destroy"
+  patch "/questions/:question_id/best_answer/:id", to: "questions#best_answer", as: :question_best_answer
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

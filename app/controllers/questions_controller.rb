@@ -8,7 +8,13 @@ class QuestionsController < ApplicationController
   # GET /questions/1
   def show
     @question = Question.find(params[:id])
-    @answers = Answer.order(:best, updated_at: :desc).where(question_id: params[:id])
+    @best_answer = @question.best_answer
+    @answers = @question.answers.order(updated_at: :desc)
+
+    if @answers.include?(@best_answer)
+      @answers = @answers - [@best_answer]
+      @answers.unshift(@best_answer)
+    end
   end
 
   # GET /questions/new
@@ -35,16 +41,27 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
     if @question.update(question_params)
-      redirect_to action: 'show'
+      redirect_to @question
     else
-      # @answers = Answer.find(:all)
       render 'edit'
     end
   end
 
   def destroy
     Question.find(params[:id]).destroy
-    redirect_to action: 'index'
+    redirect_to @question
+  end
+
+  def best_answer
+    @question = Question.find(params[:question_id])
+    @answer = Answer.find(params[:id])
+    # @question.best_answer = @answer
+    if @question.update(best_answer_id: params[:id])
+      redirect_to @question
+    else
+      flash[:notice] = "Error!"
+      render @question
+    end
   end
 
   # GET /questions/search
@@ -61,4 +78,5 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title, :description, :user_id, :submitter)
   end
+
 end
