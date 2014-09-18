@@ -1,0 +1,19 @@
+<h1>Edit Your Question</h1>
+
+<% @question.errors.full_messages.each do |message| %>
+<%= message %>
+<%end%>
+
+<% if user_signed_in? && same_user?(@question) %>
+  <%= form_for @question, url: {action: "update"}, html: {class: "nifty_form"} do |f| %>
+    <%= f.label :title %>: <br />
+    <%= f.text_field :title %><br />
+    <%= f.label :description %>: </br />
+    <%= f.text_area :description, size: "100x5" %><br />
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.submit "Submit" %>
+    <%= button_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: 'Are you sure?'} %>
+  <% end %>
+<% else %>
+  <p>You must sign in to edit your question.</p>
+<% end %>

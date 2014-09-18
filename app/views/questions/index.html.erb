@@ -1,0 +1,15 @@
+<h1>Questions</h1>
+
+<p>
+  <%= button_to 'Add Question', new_question_path, method: :get %>
+</p>
+
+<br />
+
+<ol>
+  <% @questions.each do |question| %>
+  <li>
+    <%= question.created_at %> - <%= link_to question.title, question %>
+  </li>
+  <% end %>
+</ol>

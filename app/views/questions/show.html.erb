@@ -1,0 +1,23 @@
+<h1><%= @question.title %></h1>
+
+<p>
+  <%= @question.description %>
+</p>
+
+<h2>Answers</h2>
+
+<% @answers.each do |answer| %>
+  <a href="<%= answer.user.url %>">@<%= answer.user.username %></a> at <%= answer.created_at %> said: <br />
+  <%= answer.description %><br />
+  <br>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= button_to 'Answer Question', new_question_answer_path(@question), method: :get %>
+<% end %>
+
+<% if user_signed_in? && same_user?(@question) %>
+  <%= button_to 'Edit Question', edit_question_path(@question), method: :get %>
+  <%= button_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: 'Are you sure?'} %>
+<% end %>
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rescue Mission</title>
+  <%= stylesheet_link_tag    "application", "normalize" %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <a class="logo" href="/">Rescue Mission</a>
+    <ul class="top-bar-section">
+      <% if user_signed_in? %>
+        <li>Signed in as @<%= current_user.username %></a></li>
+        <li><a href="/sign_out">Sign out</a></li>
+      <% else %>
+        <li><a href="/auth/twitter">Sign in</a></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<% if flash.any? %>
+  <div class="flash">
+    <div class="container">
+      <%= flash[:notice] %>
+    </div>
+  </div>
+<% end %>
+
+<%= yield %>
+
+</body>
+</html>

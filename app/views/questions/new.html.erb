@@ -1,0 +1,18 @@
+<h1>Submit Your Question</h1>
+
+<% @question.errors.full_messages.each do |message| %>
+<%= message %>
+<%end%>
+
+<%if user_signed_in? %>
+  <%= form_for @question, url: {action: "create"}, html: {class: "nifty_form"} do |f| %>
+    <%= f.label :title %>: <br />
+    <%= f.text_field :title %><br />
+    <%= f.label :description %>: <br />
+    <%= f.text_area :description, size: "100x5" %><br />
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.submit "Submit" %>
+  <% end %>
+<% else %>
+  <p>You must sign in to ask a question</p>
+<% end %>
