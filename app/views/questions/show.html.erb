@@ -1,14 +1,14 @@
 <h1><%= @question.title %></h1>
 
 <p>
-  <%= @question.description %>
+  <%= markdown(@question.description) %>
 </p>
 
 <h2>Answers</h2>
 
 <% @answers.each do |answer| %>
   <a href="<%= answer.user.url %>">@<%= answer.user.username %></a> at <%= answer.created_at %> said: <br />
-  <%= answer.description %><br />
+  <%= markdown(answer.description) %><br />
   <% if user_signed_in? && same_user?(@question) %>
 
 
